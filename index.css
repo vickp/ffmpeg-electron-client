@@ -74,13 +74,34 @@ table {
 
 #url {
   width: 560px;
+  height: 32px;
+  border-radius: 4px;
 }
 
-#convert {
+#convertBtn {
+  width: 64px;
+  height: 32px;
+  background: linear-gradient(135deg, #9147ff, #9147ff);
+  border-radius: 4px;
+  margin-left: 8px;
+  font-size: 0.8rem;
+  color: #ffffff;
+}
+
+#all {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 240px;
+  width: 45.6%;
+  height: 120px;
+  text-align: center;
+}
+
+#hour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45.6%;
+  height: 120px;
   text-align: center;
 }
