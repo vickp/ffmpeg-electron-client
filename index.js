@@ -3,6 +3,10 @@
 // const convertAll = document.getElementById("all");
 // const convertHour = document.getElementById("hour");
 
+import React from 'react';
+import { render } from 'react-dom';
+import App from './App';
+
 // convertBtn.addEventListener("click", (e) => {
 //   convertAll.innerText = `.\\ffmpeg -headers "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36" -i "${
 //     url.value
@@ -14,3 +18,10 @@
 //     -8
 //   )}_60_%d.mp4"`;
 // });
+
+document.addEventListener('DOMContentLoaded', () => {
+  render (
+    <App />,
+    document.getElementById('app')
+  )
+})

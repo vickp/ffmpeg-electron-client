@@ -1,2 +1,0 @@
-# ffmpeg-command-generator
- 
