@@ -1,4 +1,13 @@
 {
+  "name": "ffmpeg-command-generator",
+  "version": "1.0.0",
+  "description": "FFMpeg Command Generator",
+  "main": "main.js",
+  "author": "Juwon Baek",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
   "devDependencies": {
     "electron": "^13.1.7"
   }
