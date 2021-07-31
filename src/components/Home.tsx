@@ -37,7 +37,7 @@ const Home = () => {
   }
 
   const executeCollect = (args) => {
-    ipcRenderer.send('execute', args);
+    // ipcRenderer.send('execute', args);
   }
 
   return (
