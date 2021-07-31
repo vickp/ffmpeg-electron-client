@@ -30,8 +30,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "FFCG",
+    "appId": "org.erb.FFCG",
     "files": [
       "dist/",
       "node_modules/",
