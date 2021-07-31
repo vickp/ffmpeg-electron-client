@@ -11,9 +11,10 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { exec } from 'child_process';
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -95,6 +96,17 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+
+  ipcMain.on('execute', (event, args) => {
+    const ffmpegPath =
+      path.join(__dirname).replace('src', 'resources\\bin') + args;
+
+    exec(ffmpegPath, (e, stdout, stderr) => {
+      console.error(e);
+      console.log(stdout);
+      console.log(stderr);
+    });
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
