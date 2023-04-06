@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import { ipcRenderer } from 'electron';
+import { getMinuteFromDecNum } from '../helpers';
 
 const Home = () => {
   // convertBtn.addEventListener("click", (e) => {
@@ -36,10 +37,12 @@ const Home = () => {
 
     const format = `${Y}-${M}-${D}-${H}-${m}-${s}-${ms}`;
 
+    const divideTime = Number(getMinuteFromDecNum(30)).toString();
+
     const agent = `"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36"`;
 
     setResult(
-      `.\\\\ffmpeg -headers ${agent} -i "${url}" -c copy -flags +global_header -f segment -segment_time 3600 -segment_format_options movflags=+faststart -reset_timestamps 1 "${format}_%d.mp4"`
+      `.\\\\ffmpeg -headers ${agent} -i "${url}" -c copy -flags +global_header -f segment -segment_time ${divideTime} -segment_format_options movflags=+faststart -reset_timestamps 1 "${format}_%d.mp4"`
     );
   };
 
