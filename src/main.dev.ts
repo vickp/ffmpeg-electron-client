@@ -15,7 +15,6 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { exec } from 'child_process';
-import MenuBuilder from './menu';
 
 export default class AppUpdater {
   constructor() {
@@ -72,6 +71,7 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
+    autoHideMenuBar: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -108,9 +108,6 @@ const createWindow = async () => {
       console.log(stderr);
     });
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.on('new-window', (event, url) => {
