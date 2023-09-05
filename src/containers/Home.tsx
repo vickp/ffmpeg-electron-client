@@ -139,6 +139,7 @@ const Home = () => {
               textAlign: 'center',
               padding: '32px',
               wordBreak: 'break-word',
+              overflow: 'scroll',
             }}
           />
         </div>
