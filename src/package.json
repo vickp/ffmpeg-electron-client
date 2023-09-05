@@ -1,7 +1,7 @@
 {
   "name": "ffmpeg-command-generator",
   "productName": "ffmpeg-command-generator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "FFMpeg command generator based on React, React Router, Webpack, React Fast Refresh for rapid application development",
   "main": "./main.prod.js",
   "author": {
