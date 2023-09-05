@@ -1,6 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { getSecToMin } from '.';
 
+type FFmpegOptions = {
+  videoCodec?: 'libx264' | 'libx265' | 'other_video_codec';
+  crf?: 0 | 18 | 20 | 22 | 24 | 26 | 28; // Specific CRF values you want to support
+  audioCodec?: 'aac' | 'mp3' | 'other_audio_codec';
+  audioBitrate?: '32k' | '64k' | '128k' | '192k' | '256k' | '320k'; // Specific bitrates you want to support
+};
+
 class FFmpegGenerator {
   private generateNowTimeString = () => {
     const date = new Date();
@@ -31,16 +38,38 @@ class FFmpegGenerator {
     return `${fileName}`;
   };
 
+  generateFFmpegCommand = (
+    inputFilePath: string,
+    options: FFmpegOptions = {}
+  ): string => {
+    const {
+      videoCodec = 'libx264',
+      crf = 23,
+      audioCodec = 'aac',
+      audioBitrate = '128k',
+    } = options;
+
+    const outputFilePath = this.generateFileName(inputFilePath);
+
+    const ffmpegCommand = `.\\\\ffmpeg -i ${inputFilePath} -c:v ${videoCodec} -crf ${crf} -c:a ${audioCodec} -b:a ${audioBitrate} ${outputFilePath}`;
+
+    return ffmpegCommand;
+  };
+
   generateCommand = (url: string, divideTime: number) => {
     const timeString = getSecToMin(divideTime);
 
-    const CHROME_VER = '114.0.5735.134';
-
-    const agent = `"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${CHROME_VER} Safari/537.36"`;
+    const inputFile = `-i "${url}"`;
 
     const fileName = this.generateFileName(url);
 
-    const res = `.\\\\ffmpeg -headers ${agent} -i "${url}" -c copy -flags +global_header -f segment -segment_time ${timeString} -segment_format_options movflags=+faststart -reset_timestamps 1 "${fileName}_%d.mp4"`;
+    const videoCodecOption = `-c:v libx264 -preset fast -crf 23`;
+
+    const audioCodecOption = `-c:a aac -b:a 128k`;
+
+    const codecOption = `${videoCodecOption} ${audioCodecOption}`;
+
+    const res = `.\\\\ffmpeg ${inputFile} ${codecOption} -flags +global_header -f segment -segment_time ${timeString} -segment_format_options movflags=+faststart -reset_timestamps 1 "${fileName}_%d.mp4"`;
 
     return res;
   };
