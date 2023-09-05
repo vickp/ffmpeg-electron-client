@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { getSecToMin } from '../helpers';
 import { version } from '../package.json';
+import { ffmpegGenerator } from '../helpers/ffmpegGenerator';
 
 const CHROME_VER = '113.0.5672.93';
 
@@ -29,7 +30,9 @@ const Home = () => {
   const [values, setValues] = useState({
     url: '',
   });
+
   const [divideTime, setDivideTime] = useState(30);
+
   const [result, setResult] = useState('');
 
   const copyToClipBoard = async (str: string) => {
@@ -38,31 +41,11 @@ const Home = () => {
   };
 
   const generateAddr = (url: string) => {
-    const date = new Date();
+    const command = ffmpegGenerator.generateCommand(url, divideTime);
 
-    const [Y, M, D, H, m, s, ms] = [
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      date.getMilliseconds(),
-    ];
+    setResult(command);
 
-    const format = `${Y}-${M}-${D}-${H}-${m}-${s}-${ms}`;
-
-    const timeString = getSecToMin(divideTime);
-
-    const agent = `"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${CHROME_VER} Safari/537.36"`;
-
-    const res = `.\\\\ffmpeg -headers ${agent} -i "${url}" -c copy -flags +global_header -f segment -segment_time ${timeString} -segment_format_options movflags=+faststart -reset_timestamps 1 "${format}_%d.mp4"`;
-
-    setResult(res);
-
-    copyToClipBoard(res);
-
-    return res;
+    copyToClipBoard(command);
   };
 
   const handleChange = (e: { target: { value: any } }) => {
