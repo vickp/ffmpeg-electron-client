@@ -14,7 +14,6 @@
     "dev": "node -r @babel/register ./.erb/scripts/CheckPortInUse.js && yarn dev:renderer",
     "dev:main": "cross-env NODE_ENV=development electron -r ./.erb/scripts/BabelRegister ./src/main.dev.ts",
     "dev:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
-    "test": "jest"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
